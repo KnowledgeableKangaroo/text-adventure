@@ -2,77 +2,31 @@ import java.util.Scanner;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 public class TextAdventure {
-	// Initialize player name and level
-	static int playerLevel;
-	static String playerName;
-	// Level 0 Variables
-	static String entersCave;
-	static double playerHealth;
-	// Level 1 Variables
-	static int rocksNum;
-	static double damage; 
-	static double newDamage;
-	// Level 2 Variables
-    static boolean hasSword;
-    static String playerChoice;
-    // Level 3 variables
-    static int maxStrengths;
-    static int playersStrength;
-    static int DragonsHP;
-    static String loseMessage;
-    static String winMessage;
-    static String playerTraits;
-    static int gold;
-    
-    public TextAdventure(){
-    	// Initialize player name and level
-    	playerLevel = 0;
-    	playerName = "";
-    	// Level 0 Variables
-    	entersCave = "";
-    	playerHealth = 0;
-    	// Level 1 Variables
-    	rocksNum = 0;
-    	damage = 0; 
-    	newDamage = 0;
-    	// Level 2 Variables
-        hasSword = false;
-        playerChoice = "";
-        // Level 3 variables
-        maxStrengths = 0;
-        playersStrength = 0;
-        DragonsHP = 0;
-        loseMessage = "";
-        winMessage = "";
-        playerTraits = "";
-        gold = 0;
-    }
-
  public static void main(String[] args) throws InterruptedException {
   // Initialize variables from Java's library
   Scanner userInput = new Scanner(System.in);
   Random generator = new Random();
-  playerHealth = 50.0;
-  rocksNum = generator.nextInt(8) + 2; // Generates random integer from 2 to 5
-  damage = generator.nextDouble() * 8 + 3; // Generates random decimal between 10 and 3
-  hasSword = false;
-  maxStrengths = 30 + 1;
-  playersStrength = generator.nextInt(maxStrengths) + 10;
-  DragonsHP = generator.nextInt(maxStrengths) + 10;
-  loseMessage = "Oh no! The dragon defeated you!";
-  winMessage = "You slained the dragon! HOORAY!";
-  playerTraits = "";
-  // Level 4 variables
-  // Level 5 variables
-  // Level 6 variables
-  gold = generator.nextInt(41) + 10; // finds random number between 10 and 50
+  int playerLevel = 0;
+  double playerHealth = 50.0;
+  int rocksNum = generator.nextInt(8) + 2; // Generates random integer from 2 to 5
+  double damage = generator.nextDouble() * 8 + 3; // Generates random decimal between 10 and 3
+  boolean hasSword = false;
+  int maxStrengths = 30 + 1;
+  int playersStrength = generator.nextInt(maxStrengths) + 10;
+  int DragonsHP = generator.nextInt(maxStrengths) + 10;
+  String loseMessage = "Oh no! The dragon defeated you!";
+  String winMessage = "You slained the dragon! HOORAY!";
+  String playerTraits = "";
+  String playerChoice;
+  int gold = generator.nextInt(41) + 10; // finds random number between 10 and 50
+  Score score = new Score(hasSword, playerLevel, playerHealth, playersStrength, gold);
   // starts game
   printText("What will your character's name be?");
-  playerName = userInput.nextLine();
+  String playerName = userInput.nextLine();
 if (playerLevel == 0) { // Level 0: 
    printText("Welcome " + playerName + "!");
    printText("Before you is a large cave mouth and darkness. Dare you enter the Cave of Wonders? \n (Type true, false, yes, or no)");
-   entersCave = userInput.nextLine();
+   String entersCave = userInput.nextLine();
    if (entersCave.equals("true") || entersCave.equals("yes")) {
     printText("Good job. You bravely enter the cave. You are about to have the adventure of your life!");
     TimeUnit.SECONDS.sleep(2);
@@ -88,16 +42,16 @@ if(playerLevel == 1) { // Level 1: Trip Wire and Rock Slide
 	printText("Venturing into the dark cave, you feel something press against your leg...");
 	printText("It's a trap! Suddenly you are being bombarded by " + rocksNum + " rocks from above");
 	damage = damage * rocksNum;
-	newDamage = Math.round(damage * 10.0);
-	newDamage /= 10.0;
-	playerHealth-=newDamage;
+	damage = Math.round(damage * 10.0);
+	damage /= 10.0;
+	playerHealth-= damage;
 	playerHealth = Math.round(playerHealth * 10.0);
 	playerHealth /= 10.0;
 	TimeUnit.SECONDS.sleep(5);
 	playerHealth = (playerHealth < 0.0) ? 0.0 : playerHealth;
 	printText("You have " + playerHealth + " health remaining.");
 	if(playerHealth <= 0.0) {
-		printText("The rocks suffocate you. GAME OVER! Your score is " + findScore());
+		printText("The rocks suffocate you. GAME OVER! Your score is " + score.find());
 		System.exit(0);
 	}
 	else {
@@ -145,8 +99,8 @@ if(playerLevel == 3) { // Level 3: Slaying the dragon
     	  printText("You are one courageous fellow. You charge the dragon.");
       }
       else if(playerChoice.equals("flight")) {
-    	  printText("I guess this is too much for you. You flee from the room and get out of the Cave just in the nick of time.");
-    	  printText("Your score is " + findScore());
+    	  printText("As you run away to hide in the safety of your warm bed, the dragon yawns and returns to its slumber.");
+    	  printText("Your score is " + score.find());
     	  System.exit(0);
       }
 	  printText("Player's Strength: " + playersStrength + "\nDragons HP: " + DragonsHP + "\nPlayer has the sword: " + hasSword);
@@ -164,7 +118,7 @@ if(playerLevel == 3) { // Level 3: Slaying the dragon
 	   playerLevel++;
 	  } else if (playersStrength < DragonsHP) {
 	   printText(loseMessage);
-	   printText("Finally, the dragon towers over you and swallows you hole. \n GAME OVER! Your score is " + findScore());
+	   printText("Finally, the dragon towers over you and swallows you hole. \n GAME OVER! Your score is " + score.find());
 	   System.exit(0);
 	  }
 	}
@@ -178,7 +132,7 @@ if(playerLevel == 4) { // Level 4: Riddle
 		playerLevel++;
 	}
 	else {
-		printText("Incorrect. GAME OVER. Your score is " + findScore());
+		printText("Incorrect. GAME OVER. Your score is " + score.find());
 	}
 }
 if(playerLevel == 5) { // Level 5: Gold
@@ -186,11 +140,11 @@ if(playerLevel == 5) { // Level 5: Gold
 	printText("Now for the final decision: True or False: you will grab all the gold and escape?");
 	boolean grabsAll = userInput.nextBoolean();
 	if(grabsAll) {
-		printText("No! It is a trap! You lose all of your gold. You score is " + findScore());
+		printText("No! It is a trap! You lose all of your gold. You score is " + score.find());
 		
 	}
 	else {
-		printText("Magnificent! You passed the final test! You have a score of " + findScore());
+		printText("Magnificent! You passed the final test! You have a score of " + score.find());
 	}
 }
 userInput.close();
@@ -198,8 +152,5 @@ userInput.close();
 public static void printText(String message) {
 	System.out.println(message);
 }
-public static int findScore() {
-		int swordValue = (hasSword) ? 10 : -10;
-	return (int)(playerLevel * (playerHealth + playersStrength) + swordValue + gold);
- }
+
 }
