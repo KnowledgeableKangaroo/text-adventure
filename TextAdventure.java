@@ -7,9 +7,7 @@ public class TextAdventure {
   // Initialize variables from Java's library
   Scanner userInput = new Scanner(System.in);
   Random generator = new Random();
-  // Initialize variables from Java's library
-  Scanner userInput = new Scanner(System.in);
-  Random generator = new Random();
+  String playerName;
   int playerLevel = 0;
   double playerHealth = 50.0;
   int rocksNum = generator.nextInt(8) + 2; // Generates random integer from 2 to 5
@@ -24,6 +22,7 @@ public class TextAdventure {
   String playerChoice;
   int gold = generator.nextInt(41) + 10; // finds random number between 10 and 50
   Score score = new Score(hasSword, playerLevel, playerHealth, playersStrength, gold);
+  String entersCave;
   
   // Starts Game
   printText("What will your character's name be?");
@@ -49,9 +48,9 @@ if(playerLevel == 1) { // Stage 1: Trip Wire and Rock Slide
 	waitTime(1);
 	printText("It's a trap! Suddenly you are being bombarded by " + rocksNum + " rocks from above");
 	damage = damage * rocksNum; // The damagePerRock times the NumberOfRocks equals the total rock number
-	newDamage = Math.round(damage * 10.0); // Round (totalDamage * 10)
-	newDamage /= 10.0; // Divide rounded number by 10 to get a quotient that is the total damage to the nearest tenth
-	playerHealth-=newDamage; // Player loses this amount of health
+	damage = Math.round(damage * 10.0); // Round (totalDamage * 10)
+	damage /= 10.0; // Divide rounded number by 10 to get a quotient that is the total damage to the nearest tenth
+	playerHealth-=damage; // Player loses this amount of health
 	playerHealth = Math.round(playerHealth * 10.0); // Round (health * 10)
 	playerHealth /= 10.0; // Divide rounded number by 10 to get a quotient that is the new health to the nearest tenth
 	waitTime(5);
@@ -120,7 +119,7 @@ if(playerLevel == 3) { // Stage 3: Slaying the dragon
 	   } else {
 	    printText("You can't defeat the dragon with your bare hands. \nYou try fighting, but you gradually lose stamina and get very tired.");
 	    playersStrength-=10;
-	    playerHealth-=(playerHealth/2);
+	    playerHealth /= 2;
 	   }
 	  }
 	  if (playersStrength > DragonsHP) {
@@ -162,10 +161,6 @@ userInput.close();
 public static void printText(String message) {
 	System.out.println(message);
 }
-public static int score.find() {
-		int swordValue = (hasSword) ? 10 : -10;
-	return (int)(playerLevel * (playerHealth + playersStrength) + swordValue + gold);
- }
 public static void waitTime(int seconds) throws InterruptedException{
 	TimeUnit.SECONDS.sleep(seconds);
 }
