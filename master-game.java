@@ -2,50 +2,6 @@ import java.util.Scanner;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 public class TextAdventure {
-	// Initialize player name and level
-	static int playerLevel;
-	static String playerName;
-	// Stage 0 Variables
-	static String entersCave;
-	static double playerHealth;
-	// Stage 1 Variables
-	static int rocksNum;
-	static double damage; 
-	static double newDamage;
-	// Stage 2 Variables
-    static boolean hasSword;
-    static String playerChoice;
-    // Stage 3 variables
-    static int maxStrengths;
-    static int playersStrength;
-    static int DragonsHP;
-    static String loseMessage;
-    static String winMessage;
-    static String playerTraits;
-    static int gold;
-    public TextAdventure(){
-    	// Initialize player name and level
-    	playerLevel = 0;
-    	playerName = "";
-    	// Stage 0 Variables
-    	entersCave = "";
-    	playerHealth = 0;
-    	// Stage 1 Variables
-    	rocksNum = 0;
-    	damage = 0; 
-    	newDamage = 0;
-    	// Stage 2 Variables
-        hasSword = false;
-        playerChoice = "";
-        // Stage 3 variables
-        maxStrengths = 0;
-        playersStrength = 0;
-        DragonsHP = 0;
-        loseMessage = "";
-        winMessage = "";
-        playerTraits = "";
-        gold = 0;
-    }
  public static void main(String[] args) throws InterruptedException {
   // Initialize variables from Java's library
   Scanner userInput = new Scanner(System.in);
