@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
 public class TextAdventure {
  public static void main(String[] args) throws InterruptedException {
   // Initialize variables from Java's library
