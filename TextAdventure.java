@@ -2,28 +2,27 @@ import java.util.Scanner;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 public class TextAdventure {
+	static Random generator = new Random();
+	static Scanner userInput = new Scanner(System. in );
+	static boolean hasSword = false;
+	static int maxStrengths = 30 + 1;
+	static int playersStrength = generator.nextInt(maxStrengths) + 10;
+	static int DragonsHP = generator.nextInt(maxStrengths) + 10;
+	static String playerName;
+	static int gold = generator.nextInt(41) + 10; // finds random number between 10 and 50
+	static int playerLevel = 0;
+	static double playerHealth = 50.0;
+	static int rocksNum = generator.nextInt(8) + 2; // Generates random integer from 2 to 5
+	static double damage = generator.nextDouble() * 8 + 3; // Generates random decimal between 10 and 3
+	static Score score = new Score(hasSword, playerLevel, playerHealth, playersStrength, gold);	
 
 	public static void main(String[] args) throws InterruptedException {
 		// Initialize variables from Java's library
-		Scanner userInput = new Scanner(System. in );
-		Random generator = new Random();
-		String playerName;
-		int playerLevel = 0;
-		double playerHealth = 50.0;
-		int rocksNum = generator.nextInt(8) + 2; // Generates random integer from 2 to 5
-		double damage = generator.nextDouble() * 8 + 3; // Generates random decimal between 10 and 3
-		boolean hasSword = false;
-		int maxStrengths = 30 + 1;
-		int playersStrength = generator.nextInt(maxStrengths) + 10;
-		int DragonsHP = generator.nextInt(maxStrengths) + 10;
 		String loseMessage = "Oh no! The dragon defeated you!";
 		String winMessage = "You slained the dragon! HOORAY!";
 		String playerTraits = "";
 		String playerChoice;
-		int gold = generator.nextInt(41) + 10; // finds random number between 10 and 50
-		Score score = new Score(hasSword, playerLevel, playerHealth, playersStrength, gold);
 		String entersCave;
-
 		// Starts Game
 		printText("What will your character's name be?");
 		playerName = userInput.nextLine();
@@ -145,23 +144,28 @@ public class TextAdventure {
 			}
 		}
 		if (playerLevel == 5) { // Stage 5: Gold
-			printText("Congratulations, " + playerName + ", you have beat the game. Now for your prize!  You open the door to find a vault of " + gold + " gold pieces!!");
-			printText("Now for the final decision: True or False: you will grab all the gold and escape?");
-			boolean grabsAll = userInput.nextBoolean();
-			if (grabsAll) {
-				printText("No! It is a trap! You lose all of your gold. You score is " + score.find());
-				System.exit(0);
-			}
-			else {
-				printText("Magnificent! You passed the final test! You have a score of " + score.find());
-			}
+			level5();
 		}
 		userInput.close();
 	}
+
 	public static void printText(String message) {
 		System.out.println(message);
 	}
 	public static void waitTime(int seconds) throws InterruptedException {
 		TimeUnit.SECONDS.sleep(seconds);
+	}
+
+	public static void level5() {
+		printText("Congratulations, " + playerName + ", you have beat the game. Now for your prize!  You open the door to find a vault of " + gold + " gold pieces!!");
+		printText("Now for the final decision: True or False: you will grab all the gold and escape?");
+		boolean grabsAll = userInput.nextBoolean();
+		if (grabsAll) {
+			printText("No! It is a trap! You lose all of your gold. You score is " + score.find());
+			System.exit(0);
+		}
+		else {
+			printText("Magnificent! You passed the final test! You have a score of " + score.find());
+		}
 	}
 }
